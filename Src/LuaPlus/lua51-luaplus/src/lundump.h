@@ -42,3 +42,7 @@ LUAI_FUNC void luaU_print (const Proto* f, int full);
 #define LUAC_HEADERSIZE		12
 
 #endif
+
+
+/* for 32 bit compatible bytecode */
+#define LUAC_STR_SIZE_TYPE int

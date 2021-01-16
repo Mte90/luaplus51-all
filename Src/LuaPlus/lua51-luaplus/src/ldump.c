@@ -36,7 +36,7 @@ typedef struct {
 #define DumpVar(x,D)	 	DumpMem(&x,1,sizeof(x),D)
 #endif /* LUA_ENDIAN_SUPPORT */
 
-static void DumpBlock(const void* b, size_t size, DumpState* D)
+static void DumpBlock(const void* b, LUAC_STR_SIZE_TYPE size, DumpState* D)
 {
  if (D->status==0)
  {
@@ -48,7 +48,7 @@ static void DumpBlock(const void* b, size_t size, DumpState* D)
 
 #if LUA_ENDIAN_SUPPORT
 
-static void DumpEndianBlock(const void* b, size_t size, DumpState* D)
+static void DumpEndianBlock(const void* b, LUAC_STR_SIZE_TYPE size, DumpState* D)
 {
  if (D->status==0)
  {
@@ -88,7 +88,7 @@ static void DumpNumber(lua_Number x, DumpState* D)
  DumpVar(x,D);
 }
 
-static void DumpVector(const void* b, size_t n, size_t size, DumpState* D)
+static void DumpVector(const void* b, LUAC_STR_SIZE_TYPE n, LUAC_STR_SIZE_TYPE size, DumpState* D)
 {
  DumpInt((int)n,D);
 #if LUA_ENDIAN_SUPPORT
@@ -100,7 +100,7 @@ static void DumpVector(const void* b, size_t n, size_t size, DumpState* D)
    char* origSwapBuffer=luaZ_openspace(D->L,&D->b,n*size);
    char* swapBuffer = origSwapBuffer;
    char* q=(char*) b;
-   size_t orign = n;
+   LUAC_STR_SIZE_TYPE orign = n;
    while (n--)
    {
     char* p =(char*) q+size-1;
@@ -125,12 +125,12 @@ static void DumpString(const TString* s, DumpState* D)
 {
  if (s==NULL || getstr(s)==NULL)
  {
-  size_t size=0;
+  LUAC_STR_SIZE_TYPE size=0;
   DumpVar(size,D);
  }
  else
  {
-  size_t size=s->tsv.len+1;		/* include trailing '\0' */
+  LUAC_STR_SIZE_TYPE size=s->tsv.len+1;		/* include trailing '\0' */
   DumpVar(size,D);
   DumpBlock(getstr(s),size,D);
  }
